@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `gender` tinyint(2) NOT NULL DEFAULT '10',
   `tempban` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `greason` tinyint(4) NOT NULL DEFAULT '0',
-  `tos` tinyint(1) NOT NULL DEFAULT '0',
+  `tos` tinyint(1) NOT NULL DEFAULT '1',
   `sitelogged` text,
   `webadmin` int(1) DEFAULT '0',
   `nick` varchar(20) DEFAULT NULL,
