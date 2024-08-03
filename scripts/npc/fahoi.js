@@ -1,34 +1,54 @@
-var status;
-var sel;
-
 var POWER_ELIXIR = 2000005;
+var state = "";
+var params = [];
 
 var commands = [
   {
     msg: "Open moi special shop huehuehue",
     fx: function () {
       cm.openShopNPC(1337);
+      state = "DISPOSE";
     },
   },
   {
     msg: "Fahoi gib chu some " + itemName(POWER_ELIXIR) + " x100",
     fx: function () {
       cm.giveItem(2000005, 100);
+      state = "DISPOSE";
     },
   },
   {
     msg: "Be stonk like fahoi and get all skills",
     fx: function () {
       cm.maxMastery();
+      state = "DISPOSE";
     },
   },
   {
     msg: "Change job for chu?",
     fx: function () {
-      cm.sendOk("type @jobchange");
+      cm.dispose();
+      cm.openNpc(10000, "jobChange");
     },
   },
+  {
+    msg: "Clear your inventory quickly", 
+    fx: function() {
+      cm.dispose();
+      cm.openNpc(9000041);
+    }
+  },
 ];
+
+function getInventoryOption() {
+      var options = ["EQUIP", "USE", "SET-UP", "ETC"];
+      var msg = [];
+      for(var i=0; i<options.length; i++) {
+        msg.push("#L" + i + "#" + options[i] + "#l"); 
+      }
+
+      return msg.join("\r\n");
+}
 
 function itemName(id) {
   return "#z" + id + "#";
@@ -54,16 +74,20 @@ function start(c, npc, character) {
 }
 
 function action(mode, type, selection) {
-  status++;
-
-  if (status == 0) {
-    if (sel == -1) sel = selection;
-
-    if (sel >= 0 && sel < commands.length) {
-      commands[sel].fx();
-    }
+  cm.getCurrentPlayer().message("selection: " + selection +  ", state: " + state);
+  switch(state) {
+    case "": 
+	if (selection >= 0 && selection < commands.length) {
+	  commands[selection].fx();
+	}
+	cm.getCurrentPlayer().message("empty state");
+	break;
+    case "DISPOSE": 
+  	cm.getCurrentPlayer().message("disposed");
+	cm.dispose();
+        break;
+    default: 
+	break;
   }
 
-  cm.getCurrentPlayer().message("selection: " + selection);
-  cm.dispose();
 }

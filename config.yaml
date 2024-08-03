@@ -197,7 +197,7 @@ server:
   LOGIN_ATTEMPT_DURATION: 120 #Period in seconds the login attempt remains registered on the system.
 
   #Ip Configuration
-  HOST: 192.168.86.24
+  HOST: 139.59.232.201
   LOCALSERVER: false
   GMSERVER: false
 

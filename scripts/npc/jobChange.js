@@ -23,7 +23,7 @@ function action(mode, type, selection) {
     if (mode == 1) status++;
     else status--;
     if (status == 0) {
-      cm.sendNext("#eHello #r#h ##k, I'm in charge of Job Advancing." + status);
+      cm.sendNext("#eHello #r#h ##k, I'm in charge of Job Advancing.");
     } else if (status == 1) {
       if (cm.getLevel() < 200 && cm.getJobId() == 0) {
         if (cm.getLevel() < 8) {
