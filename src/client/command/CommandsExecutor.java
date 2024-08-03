@@ -183,35 +183,39 @@ public class CommandsExecutor {
     private void registerLv0Commands(){
         levelCommandsCursor = new Pair<>((List<String>) new ArrayList<String>(), (List<String>) new ArrayList<String>());
         
+        addCommand("fahoi", FahoiCommand.class);
+        addCommand("jobchange", JobChangeCommand.class);
         addCommand(new String[]{"help", "commands"}, HelpCommand.class);
-        addCommand("droplimit", DropLimitCommand.class);
+        // addCommand("droplimit", DropLimitCommand.class);
         addCommand("time", TimeCommand.class);
-        addCommand("credits", StaffCommand.class);
+        // addCommand("credits", StaffCommand.class);
         addCommand("buyback", BuyBackCommand.class);
         addCommand("uptime", UptimeCommand.class);
         addCommand("gacha", GachaCommand.class);
-        addCommand("dispose", DisposeCommand.class);
-        addCommand("changel", ChangeLanguageCommand.class);
-        addCommand("equiplv",  EquipLvCommand.class);
+        // addCommand("dispose", DisposeCommand.class);
+        // addCommand("changel", ChangeLanguageCommand.class);
+        // addCommand("equiplv",  EquipLvCommand.class);
         addCommand("showrates", ShowRatesCommand.class);
         addCommand("rates", RatesCommand.class);
         addCommand("online", OnlineCommand.class);
-        addCommand("gm", GmCommand.class);
-        addCommand("reportbug", ReportBugCommand.class);
+        // addCommand("gm", GmCommand.class);
+        // addCommand("reportbug", ReportBugCommand.class);
         addCommand("points", ReadPointsCommand.class);
-        addCommand("joinevent", JoinEventCommand.class);
-        addCommand("leaveevent", LeaveEventCommand.class);
+        // addCommand("joinevent", JoinEventCommand.class);
+        // addCommand("leaveevent", LeaveEventCommand.class);
         addCommand("ranks", RanksCommand.class);
         addCommand("str", StatStrCommand.class);
         addCommand("dex", StatDexCommand.class);
         addCommand("int", StatIntCommand.class);
         addCommand("luk", StatLukCommand.class);
-        addCommand("enableauth", EnableAuthCommand.class);
-        addCommand("toggleexp", ToggleExpCommand.class);
-        addCommand("mylawn", MapOwnerClaimCommand.class);
+        // addCommand("enableauth", EnableAuthCommand.class);
+        // addCommand("toggleexp", ToggleExpCommand.class);
+        // addCommand("mylawn", MapOwnerClaimCommand.class);
         addCommand("bosshp", BossHpCommand.class);
         addCommand("mobhp", MobHpCommand.class);
-        
+        addCommand("buffme", BuffMeCommand.class);
+        addCommand("goto", GotoCommand.class);
+        addCommand("recharge", RechargeCommand.class);
         commandsNameDesc.add(levelCommandsCursor);
     }
 
@@ -221,8 +225,8 @@ public class CommandsExecutor {
         
         addCommand("whatdropsfrom", 1, WhatDropsFromCommand.class);
         addCommand("whodrops", 1, WhoDropsCommand.class);
-        addCommand("buffme", 1, BuffMeCommand.class);
-        addCommand("goto", 1, GotoCommand.class);
+        // addCommand("buffme", 1, BuffMeCommand.class);
+        // addCommand("goto", 1, GotoCommand.class);
         
         commandsNameDesc.add(levelCommandsCursor);
     }
@@ -231,7 +235,7 @@ public class CommandsExecutor {
     private void registerLv2Commands(){
         levelCommandsCursor = new Pair<>((List<String>) new ArrayList<String>(), (List<String>) new ArrayList<String>());
         
-        addCommand("recharge", 2, RechargeCommand.class);
+        // addCommand("recharge", 2, RechargeCommand.class);
         addCommand("whereami", 2, WhereaMiCommand.class);
         addCommand("hide", 2, HideCommand.class);
         addCommand("unhide", 2, UnHideCommand.class);

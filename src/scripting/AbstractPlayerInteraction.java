@@ -365,17 +365,17 @@ public class AbstractPlayerInteraction {
         //---- /\ /\ /\ /\ /\ /\ /\  NOT TESTED  /\ /\ /\ /\ /\ /\ /\ /\ /\ ----
 
 	public void openNpc(int npcid) {
-		openNpc(npcid, null);
+                openNpc(npcid, null);
 	}
 
 	public void openNpc(int npcid, String script) {
                 if (c.getCM() != null) {
-                    return;
+                        return;
                 }
-            
-		c.removeClickedNPC();
-		NPCScriptManager.getInstance().dispose(c);
-		NPCScriptManager.getInstance().start(c, npcid, script, null);
+                
+                c.removeClickedNPC();
+                NPCScriptManager.getInstance().dispose(c);
+                NPCScriptManager.getInstance().start(c, npcid, script, null);
 	}
 
         public int getQuestStatus(int id) {

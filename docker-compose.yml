@@ -11,13 +11,13 @@ services:
       - "7577:7577"
     volumes:
       - ./config.yaml:/mnt/config.yaml
+      - ./scripts:/mnt/scripts
     networks:
       - backend
     environment:
       WAIT_HOSTS: db:3306
 
   db:
-    # image: mysql/mysql-server:8.0.32-1.2.11-server
     image: mariadb:10.11.5
     ports:
       - "3306:3306"

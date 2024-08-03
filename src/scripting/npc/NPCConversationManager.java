@@ -57,6 +57,7 @@ import client.SkillFactory;
 import client.inventory.Item;
 import client.inventory.ItemFactory;
 import client.inventory.MaplePet;
+import client.inventory.manipulator.MapleInventoryManipulator;
 import constants.game.GameConstants;
 import constants.inventory.ItemConstants;
 import constants.string.LanguageConstants;
@@ -92,34 +93,34 @@ import tools.FilePrinter;
 public class NPCConversationManager extends AbstractPlayerInteraction {
         
 	private int npc;
-        private int npcOid;
+    private int npcOid;
 	private String scriptName;
 	private String getText;
-        private boolean itemScript;
-        private List<MaplePartyCharacter> otherParty;
-        
-        private Map<Integer, String> npcDefaultTalks = new HashMap<>();
-        
-        private String getDefaultTalk(int npcid) {
-            String talk = npcDefaultTalks.get(npcid);
-            if (talk == null) {
-                talk = MapleLifeFactory.getNPCDefaultTalk(npcid);
-                npcDefaultTalks.put(npcid, talk);
-            }
-            
-            return talk;
+    private boolean itemScript;
+    private List<MaplePartyCharacter> otherParty;
+    
+    private Map<Integer, String> npcDefaultTalks = new HashMap<>();
+    
+    private String getDefaultTalk(int npcid) {
+        String talk = npcDefaultTalks.get(npcid);
+        if (talk == null) {
+            talk = MapleLifeFactory.getNPCDefaultTalk(npcid);
+            npcDefaultTalks.put(npcid, talk);
         }
         
-        public NPCConversationManager(MapleClient c, int npc, String scriptName) {
-               this(c, npc, -1, scriptName, false);
-        }
-        
-        public NPCConversationManager(MapleClient c, int npc, List<MaplePartyCharacter> otherParty, boolean test) {
-                super(c);
-                this.c = c;
-                this.npc = npc;
-                this.otherParty = otherParty;
-        }
+        return talk;
+    }
+    
+    public NPCConversationManager(MapleClient c, int npc, String scriptName) {
+            this(c, npc, -1, scriptName, false);
+    }
+    
+    public NPCConversationManager(MapleClient c, int npc, List<MaplePartyCharacter> otherParty, boolean test) {
+            super(c);
+            this.c = c;
+            this.npc = npc;
+            this.otherParty = otherParty;
+    }
         
 	public NPCConversationManager(MapleClient c, int npc, int oid, String scriptName, boolean itemScript) {
 		super(c);
@@ -133,7 +134,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		return npc;
 	}
         
-        public int getNpcObjectId() {
+    public int getNpcObjectId() {
 		return npcOid;
 	}
 
@@ -141,17 +142,17 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		return scriptName;
 	}
         
-        public boolean isItemScript() {
-                return itemScript;
-        }
-        
-        public void resetItemScript() {
-                this.itemScript = false;
-        }
+    public boolean isItemScript() {
+        return itemScript;
+    }
+    
+    public void resetItemScript() {
+        this.itemScript = false;
+    }
 
 	public void dispose() {
 		NPCScriptManager.getInstance().dispose(this);
-                getClient().announce(MaplePacketCreator.enableActions());
+        getClient().announce(MaplePacketCreator.enableActions());
 	}
 
 	public void sendNext(String text) {
@@ -170,9 +171,9 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		getClient().announce(MaplePacketCreator.getNPCTalk(npc, (byte) 0, text, "00 00", (byte) 0));
 	}
         
-        public void sendDefault() {
-                sendOk(getDefaultTalk(npc));
-        }
+    public void sendDefault() {
+            sendOk(getDefaultTalk(npc));
+    }
 
 	public void sendYesNo(String text) {
 		getClient().announce(MaplePacketCreator.getNPCTalk(npc, (byte) 1, text, "", (byte) 0));
@@ -215,12 +216,12 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 	}
 
 	public void sendStyle(String text, int styles[]) {
-                if (styles.length > 0) {
-                        getClient().announce(MaplePacketCreator.getNPCTalkStyle(npc, text, styles));
-                } else {    // thanks Conrad for noticing empty styles crashing players
-                        sendOk("Sorry, there are no options of cosmetics available for you here at the moment.");
-                        dispose();
-                }
+        if (styles.length > 0) {
+                getClient().announce(MaplePacketCreator.getNPCTalkStyle(npc, text, styles));
+        } else {    // thanks Conrad for noticing empty styles crashing players
+                sendOk("Sorry, there are no options of cosmetics available for you here at the moment.");
+                dispose();
+        }
 	}
 
 	public void sendGetNumber(String text, int def, int min, int max) {
@@ -253,34 +254,34 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 	}
 
 	@Override
-        public boolean forceStartQuest(int id) {
-                return forceStartQuest(id, npc);
-        }
-        
-        @Override
-        public boolean forceCompleteQuest(int id) {
-                return forceCompleteQuest(id, npc);
-        }
-        
-        @Override
-        public boolean startQuest(short id) {
-                return startQuest((int) id);
-        }
-        
-        @Override
-        public boolean completeQuest(short id) {
-                return completeQuest((int) id);
-        }
-        
-        @Override
-        public boolean startQuest(int id) {
-                return startQuest(id, npc);
-        }
-        
-        @Override
-        public boolean completeQuest(int id) {
-                return completeQuest(id, npc);
-        }
+    public boolean forceStartQuest(int id) {
+            return forceStartQuest(id, npc);
+    }
+    
+    @Override
+    public boolean forceCompleteQuest(int id) {
+            return forceCompleteQuest(id, npc);
+    }
+    
+    @Override
+    public boolean startQuest(short id) {
+            return startQuest((int) id);
+    }
+    
+    @Override
+    public boolean completeQuest(short id) {
+            return completeQuest((int) id);
+    }
+    
+    @Override
+    public boolean startQuest(int id) {
+            return startQuest(id, npc);
+    }
+    
+    @Override
+    public boolean completeQuest(int id) {
+            return completeQuest(id, npc);
+    }
         
 	public int getMeso() {
 		return getPlayer().getMeso();
@@ -294,7 +295,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		getPlayer().gainExp(gain, true, true);
 	}
 
-        @Override
+    @Override
 	public void showEffect(String effect) {
 		getPlayer().getMap().broadcastMessage(MaplePacketCreator.environmentChange(effect, 3));
 	}
@@ -325,22 +326,22 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		MapleGuild.displayGuildRanks(getClient(), npc);
 	}
         
-        public boolean canSpawnPlayerNpc(int mapid) {
-                MapleCharacter chr = getPlayer();
-                return !YamlConfig.config.server.PLAYERNPC_AUTODEPLOY && chr.getLevel() >= chr.getMaxClassLevel() && !chr.isGM() && MaplePlayerNPC.canSpawnPlayerNpc(chr.getName(), mapid);
-        }
-        
-        public MaplePlayerNPC getPlayerNPCByScriptid(int scriptId) {
-                for(MapleMapObject pnpcObj : getPlayer().getMap().getMapObjectsInRange(new Point(0, 0), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.PLAYER_NPC))) {
-                        MaplePlayerNPC pn = (MaplePlayerNPC) pnpcObj;
+    public boolean canSpawnPlayerNpc(int mapid) {
+            MapleCharacter chr = getPlayer();
+            return !YamlConfig.config.server.PLAYERNPC_AUTODEPLOY && chr.getLevel() >= chr.getMaxClassLevel() && !chr.isGM() && MaplePlayerNPC.canSpawnPlayerNpc(chr.getName(), mapid);
+    }
+    
+    public MaplePlayerNPC getPlayerNPCByScriptid(int scriptId) {
+            for(MapleMapObject pnpcObj : getPlayer().getMap().getMapObjectsInRange(new Point(0, 0), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.PLAYER_NPC))) {
+                    MaplePlayerNPC pn = (MaplePlayerNPC) pnpcObj;
 
-                        if(pn.getScriptId() == scriptId) {
-                                return pn;
-                        }
-                }
-                
-                return null;
-        }
+                    if(pn.getScriptId() == scriptId) {
+                            return pn;
+                    }
+            }
+            
+            return null;
+    }
 
 	@Override
 	public MapleParty getParty() {
@@ -388,29 +389,26 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		getPlayer().resetStats();
 	}
         
-        public void openShopNPC(int id) {
-            MapleShop shop = MapleShopFactory.getInstance().getShop(id);
-            
-            if (shop != null) {
-                shop.sendShop(c);
-            } else {    // check for missing shopids thanks to resinate
-                FilePrinter.printError(FilePrinter.NPC_UNCODED, "Shop ID: " + id + " is missing from database.");
-                MapleShopFactory.getInstance().getShop(11000).sendShop(c);
-            }
+    public void openShopNPC(int id) {
+        MapleShop shop = MapleShopFactory.getInstance().getShop(id);
+        
+        if (shop != null) {
+            shop.sendShop(c);
+        } else {    // check for missing shopids thanks to resinate
+            FilePrinter.printError(FilePrinter.NPC_UNCODED, "Shop ID: " + id + " is missing from database.");
+            MapleShopFactory.getInstance().getShop(11000).sendShop(c);
         }
+    }
 
 	public void maxMastery() {
 		for (MapleData skill_ : MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/" + "String.wz")).getData("Skill.img").getChildren()) {
 			try {
 				Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
-				getPlayer().changeSkillLevel(skill, (byte) 0, skill.getMaxLevel(), -1);
+				getPlayer().changeSkillLevel(skill, (byte) skill.getMaxLevel(), skill.getMaxLevel(), -1);
 			} catch (NumberFormatException nfe) {
-                                nfe.printStackTrace();
+                nfe.printStackTrace();
 				break;
-			} catch (NullPointerException npe) {
-                                npe.printStackTrace();
-				continue;
-			}
+			} catch (NullPointerException npe) { }
 		}
 	}
 
@@ -432,15 +430,15 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		}
 	}
         
-        public void upgradeAlliance() {
-                MapleAlliance alliance = Server.getInstance().getAlliance(c.getPlayer().getGuild().getAllianceId());
-                alliance.increaseCapacity(1);
-                
-                Server.getInstance().allianceMessage(alliance.getId(), MaplePacketCreator.getGuildAlliances(alliance, c.getWorld()), -1, -1);
-                Server.getInstance().allianceMessage(alliance.getId(), MaplePacketCreator.allianceNotice(alliance.getId(), alliance.getNotice()), -1, -1);
-                
-                c.announce(MaplePacketCreator.updateAllianceInfo(alliance, c.getWorld()));  // thanks Vcoc for finding an alliance update to leader issue
-        }
+    public void upgradeAlliance() {
+            MapleAlliance alliance = Server.getInstance().getAlliance(c.getPlayer().getGuild().getAllianceId());
+            alliance.increaseCapacity(1);
+            
+            Server.getInstance().allianceMessage(alliance.getId(), MaplePacketCreator.getGuildAlliances(alliance, c.getWorld()), -1, -1);
+            Server.getInstance().allianceMessage(alliance.getId(), MaplePacketCreator.allianceNotice(alliance.getId(), alliance.getNotice()), -1, -1);
+            
+            c.announce(MaplePacketCreator.updateAllianceInfo(alliance, c.getWorld()));  // thanks Vcoc for finding an alliance update to leader issue
+    }
 
 	public void disbandAlliance(MapleClient c, int allianceId) {
 		MapleAlliance.disbandAlliance(allianceId);
@@ -450,13 +448,13 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                 return MapleAlliance.canBeUsedAllianceName(name);
 	}
         
-        public MapleAlliance createAlliance(String name) {
-            return MapleAlliance.createAlliance(getParty(), name);
-        }
-        
-        public int getAllianceCapacity() {
-                return Server.getInstance().getAlliance(getPlayer().getGuild().getAllianceId()).getCapacity();
-        }
+    public MapleAlliance createAlliance(String name) {
+        return MapleAlliance.createAlliance(getParty(), name);
+    }
+    
+    public int getAllianceCapacity() {
+            return Server.getInstance().getAlliance(getPlayer().getGuild().getAllianceId()).getCapacity();
+    }
 
 	public boolean hasMerchant() {
 		return getPlayer().hasMerchant();
@@ -547,25 +545,25 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		return true;
 	}
         
-        public boolean itemExists(int itemid) {
-                return MapleItemInformationProvider.getInstance().getName(itemid) != null;
+    public boolean itemExists(int itemid) {
+        return MapleItemInformationProvider.getInstance().getName(itemid) != null;
+    }
+    
+    public int getCosmeticItem(int itemid) {
+        if (itemExists(itemid)) {
+                return itemid;
         }
         
-        public int getCosmeticItem(int itemid) {
-                if (itemExists(itemid)) {
-                        return itemid;
-                }
-                
-                int baseid;
-                if (itemid < 30000) {
-                        baseid = (itemid / 1000) * 1000 + (itemid % 100);
-                } else {
-                        baseid = (itemid / 10) * 10;
-                }
-                
-                return itemid != baseid && itemExists(baseid) ? baseid : -1;
+        int baseid;
+        if (itemid < 30000) {
+                baseid = (itemid / 1000) * 1000 + (itemid % 100);
+        } else {
+                baseid = (itemid / 10) * 10;
         }
         
+        return itemid != baseid && itemExists(baseid) ? baseid : -1;
+    }
+    
         private int getEquippedCosmeticid(int itemid) {
                 if (itemid < 30000) {
                         return getPlayer().getFace();
@@ -598,26 +596,26 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         }
         
         public String getSkillBookInfo(int itemid) {
-                SkillBookEntry sbe = MapleSkillbookInformationProvider.getInstance().getSkillbookAvailability(itemid);
-                switch (sbe) {
-                        case UNAVAILABLE:
-                                return "";
-                              
-                        case REACTOR:
-                                return "    Obtainable through #rexploring#k (loot boxes).";
+            SkillBookEntry sbe = MapleSkillbookInformationProvider.getInstance().getSkillbookAvailability(itemid);
+            switch (sbe) {
+                    case UNAVAILABLE:
+                            return "";
                             
-                        case SCRIPT:
-                                return "    Obtainable through #rexploring#k (field interaction).";
+                    case REACTOR:
+                            return "    Obtainable through #rexploring#k (loot boxes).";
                         
-                        case QUEST_BOOK:
-                                return "    Obtainable through #rquestline#k (collecting book).";
-                                
-                        case QUEST_REWARD:
-                                return "    Obtainable through #rquestline#k (quest reward).";
+                    case SCRIPT:
+                            return "    Obtainable through #rexploring#k (field interaction).";
+                    
+                    case QUEST_BOOK:
+                            return "    Obtainable through #rquestline#k (collecting book).";
+                            
+                    case QUEST_REWARD:
+                            return "    Obtainable through #rquestline#k (quest reward).";
 
-                        default:
-                                return "    Obtainable through #rquestline#k.";
-                }
+                    default:
+                            return "    Obtainable through #rquestline#k.";
+            }
         }
         
         // (CPQ + WED wishlist) by -- Drago (Dragohe4rt)
@@ -1157,5 +1155,19 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
             }
             
             return false;
+        }
+
+        public boolean giveItem(int itemId, short quantity) {
+            MapleCharacter player = getPlayer();
+            MapleInventoryManipulator.addById(c, itemId, quantity, player.getName(), -1, (short)0, -1);
+            return true;
+        }
+
+        public AbstractPlayerInteraction getCurrentPlayer() {
+            return c.getPlayer().getAbstractPlayerInteraction();
+        }
+
+        public MapleClient getClientInstance() {
+            return c;
         }
 }
