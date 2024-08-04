@@ -61,6 +61,7 @@ import client.inventory.manipulator.MapleInventoryManipulator;
 import constants.game.GameConstants;
 import constants.inventory.ItemConstants;
 import constants.string.LanguageConstants;
+import constants.skills.*;
 import net.server.channel.Channel;
 import net.server.coordinator.matchchecker.MatchCheckerListenerFactory.MatchCheckerType;
 import server.MapleMarriage;
@@ -84,6 +85,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
+import java.lang.reflect.Field;
 import tools.FilePrinter;
 
 /**
@@ -100,6 +103,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     private List<MaplePartyCharacter> otherParty;
     
     private Map<Integer, String> npcDefaultTalks = new HashMap<>();
+    private Field[] fields;
     
     private String getDefaultTalk(int npcid) {
         String talk = npcDefaultTalks.get(npcid);
@@ -1169,5 +1173,64 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
         public MapleClient getClientInstance() {
             return c;
+        }
+
+        public int[] jobSkillIds(int jobId) {
+            List<Integer> skillIds = new ArrayList<>();
+            // Hero
+           if (jobId == 112) {
+                fields = Hero.class.getFields();
+            } else if (jobId == 122) {
+                fields = Paladin.class.getFields();
+            } else if (jobId == 132) {
+                fields = DarkKnight.class.getFields();
+            } else if (jobId == 212) {
+                fields = FPArchMage.class.getFields();
+            } else if (jobId == 222) {
+                fields = ILArchMage.class.getFields();
+            } else if (jobId == 232) {
+                fields = Bishop.class.getFields();
+            } else if (jobId == 312) {
+                fields = Bowmaster.class.getFields();
+            } else if (jobId == 322) {
+                fields = Marksman.class.getFields();
+            } else if (jobId == 412) {
+                fields = NightLord.class.getFields();
+            } else if (jobId == 422) {
+                fields = Shadower.class.getFields();
+            } else if (jobId == 512) {
+                fields = Buccaneer.class.getFields();
+            } else if (jobId == 522) {
+                fields = Corsair.class.getFields();
+            } else if (jobId == 2112) {
+                fields = Aran.class.getFields();
+            } else if (jobId == 2217) {
+                fields = Evan.class.getFields();
+            } else if (jobId == 2218) {
+                fields = Evan.class.getFields();
+            }  else {
+                return new int[]{};
+            }
+
+            for (Field field : fields) {
+                try {
+                    if (field.getType() == int.class) {
+                        skillIds.add(field.getInt(null));
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            int[] intArray = new int[skillIds.size()];
+            for (int i = 0; i < skillIds.size(); i++) {
+                intArray[i] = skillIds.get(i);
+            }
+
+            return intArray;
+        }
+
+        public Skill getSkill(int skillId) {
+            return SkillFactory.getSkill(skillId);
         }
 }

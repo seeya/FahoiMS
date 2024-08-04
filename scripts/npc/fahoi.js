@@ -33,19 +33,19 @@ var commands = [
     },
   },
   {
-    msg: "Clear your inventory quickly", 
-    fx: function() {
-      cm.dispose();
-      cm.openNpc(9000041);
-    }
-  }, 
-  {
     msg: "Learn special skills",
-    fx: function() {
+    fx: function () {
       cm.dispose();
       cm.openNpc(10000, "learnSkill");
-    }
-  }
+    },
+  },
+  {
+    msg: "Clear your inventory quickly",
+    fx: function () {
+      cm.dispose();
+      cm.openNpc(9000041);
+    },
+  },
 ];
 
 function itemName(id) {
@@ -73,19 +73,18 @@ function start(c, npc, character) {
 
 function action(mode, type, selection) {
   //cm.getCurrentPlayer().message("selection: " + selection +  ", state: " + state);
-  switch(state) {
-    case "": 
-	if (selection >= 0 && selection < commands.length) {
-	  commands[selection].fx();
-	}
-	cm.getCurrentPlayer().message("empty state");
-	break;
-    case "DISPOSE": 
-  	cm.getCurrentPlayer().message("disposed");
-	cm.dispose();
-        break;
-    default: 
-	break;
+  switch (state) {
+    case "":
+      if (selection >= 0 && selection < commands.length) {
+        commands[selection].fx();
+      }
+      cm.getCurrentPlayer().message("empty state");
+      break;
+    case "DISPOSE":
+      cm.getCurrentPlayer().message("disposed");
+      cm.dispose();
+      break;
+    default:
+      break;
   }
-
 }

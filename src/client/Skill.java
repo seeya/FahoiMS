@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import server.MapleStatEffect;
 import server.life.Element;
+import java.io.File;
+import provider.MapleData;
+import provider.MapleDataTool;
+import provider.MapleDataProviderFactory;
 
 public class Skill {
     private int id;
@@ -95,5 +99,23 @@ public class Skill {
     
     public void addLevelEffect(MapleStatEffect effect) {
         effects.add(effect);
+    }
+
+    public String getName() {
+        MapleData data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/" + "String.wz")).getData("Skill.img");
+        StringBuilder skill = new StringBuilder();
+        skill.append(String.valueOf(this.id));
+        if (skill.length() == 4) {
+            skill.delete(0, 4);
+            skill.append("000").append(String.valueOf(this.id));
+        }
+        if (data.getChildByPath(skill.toString()) != null) {
+            for (MapleData skilldata : data.getChildByPath(skill.toString()).getChildren()) {
+                if (skilldata.getName().equals("name"))
+                    return MapleDataTool.getString(skilldata, null);
+            }
+        }
+
+        return null;
     }
 }
