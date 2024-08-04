@@ -1,690 +1,139 @@
-/*
-ReEditted by Remixes from RAGEZONE
-*/
-
-var status = 0;
-var jobName;
-var job;
+var state = "MENU";
 
 function start() {
-  status = -1;
-  action(1, 0, 0);
+	action(1, 0, 0);
 }
 
 function action(mode, type, selection) {
-  cm.getCurrentPlayer().message("selection: " + selection);
-  var jobId = cm.getPlayer().getJob().getId();
-  if (mode == -1) {
-    cm.sendOk(
-      "#eWell okay then. Come back if you change your mind.\r\n\r\nGood luck on your training."
-    );
-    cm.dispose();
-  } else {
-    if (mode == 1) status++;
-    else status--;
-    if (status == 0) {
-      cm.sendNext("#eHello #r#h ##k, I'm in charge of Job Advancing.");
-    } else if (status == 1) {
-      if (cm.getLevel() < 200 && cm.getJobId() == 0) {
-        if (cm.getLevel() < 8) {
-          cm.sendNext("#eSorry, but you have to be at least level 8 to use my services.");
-          status = 98;
-        } else if (cm.getLevel() < 10) {
-          cm.sendYesNo(
-            "#eCongratulations on reaching such a high level. Would you like to make the #rFirst Job Advancement#k as a #rMagician#k?"
-          );
-          status = 150;
-        } else {
-          cm.sendYesNo(
-            "#eCongratulations on reaching such a high level. Would you like to make the #rFirst Job Advancement#k?"
-          );
-          status = 153;
-        }
-      } else if (cm.getLevel() < 30) {
-        cm.sendNext(
-          "#eSorry, but you have to be at least level 30 to make the #rSecond Job Advancement#k."
-        );
-        status = 98;
-      } else if (cm.getJobId() == 400) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Which would you like to be? #b\r\n#L0#Assassin#l\r\n#L1#Bandit#l#k"
-        );
-      } else if (cm.getJobId() == 100) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Which would you like to be? #b\r\n#L2#Fighter#l\r\n#L3#Page#l\r\n#L4#Spearman#l#k"
-        );
-      } else if (cm.getJobId() == 200) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Which would you like to be? #b\r\n#L5#Ice Lightning Wizard#l\r\n#L6#Fire Poison Wizard#l\r\n#L7#Cleric#l#k"
-        );
-      } else if (cm.getJobId() == 300) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Which would you like to be? #b\r\n#L8#Hunter#l\r\n#L9#Crossbowman#l#k"
-        );
-      } else if (cm.getJobId() == 500) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Which would you like to be? #b\r\n#L10#Brawler#l\r\n#L11#Gunslinger#l#k"
-        );
-      } else if (cm.getJobId() == 1200) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L12#Yes#l\r\n#L13#No#l#k"
-        );
-      } else if (cm.getJobId() == 1100) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L14#Yes#l\r\n#L15#No#l#k"
-        );
-      } else if (cm.getJobId() == 1400) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L16#Yes#l\r\n#L17#No#l#k"
-        );
-      } else if (cm.getJobId() == 1300) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L18#Yes#l\r\n#L19#No#l#k"
-        );
-      } else if (cm.getJobId() == 1500) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L20#Yes#l\r\n#L21#No#l#k"
-        );
-      } else if (cm.getJobId() == 2100) {
-        cm.sendSimple(
-          "#eCongratulations on reaching such a high level. Do you want to job advance? #b\r\n#L22#Yes#l\r\n#L23#No#l#k"
-        );
-      } else if (cm.getLevel() < 70) {
-        cm.sendNext(
-          "#eSorry, but you have to be at least level 70 to make the #rThird Job Advancement#k."
-        );
-        status = 98;
-      } else if (cm.getJobId() == 410) {
-        status = 63;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 420) {
-        status = 66;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 310) {
-        status = 69;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 320) {
-        status = 72;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 210) {
-        status = 75;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 220) {
-        status = 78;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 230) {
-        status = 81;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 110) {
-        status = 84;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 120) {
-        status = 87;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 130) {
-        status = 90;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 520) {
-        status = 95;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 510) {
-        status = 92;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1210) {
-        status = 169;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1110) {
-        status = 172;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1410) {
-        status = 175;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1310) {
-        status = 178;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1510) {
-        status = 181;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getLevel() < 120) {
-        cm.sendNext(
-          "#eSorry, but you have to be at least level 120 to make the #rForth Job Advancement#k."
-        );
-        status = 98;
-      } else if (cm.getJobId() == 411) {
-        status = 105;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 421) {
-        status = 108;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 311) {
-        status = 111;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 321) {
-        status = 114;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 211) {
-        status = 117;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 221) {
-        status = 120;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 231) {
-        status = 123;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 111) {
-        status = 126;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 121) {
-        status = 129;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 131) {
-        status = 132;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 511) {
-        status = 133;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 521) {
-        status = 134;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getLevel() < 200) {
-        cm.sendNext(
-          "#eSorry, but you have already attained the highest level of your job's mastery. \r\n\r\nHowever, you can #rrebirth#k when you are level 200."
-        );
-        status = 98;
-      } else {
-        cm.dispose();
-      }
-    } else if (status == 2) {
-      if (selection == 0) {
-        jobName = "Assassin";
-        job = 410;
-      }
-      if (selection == 1) {
-        jobName = "Bandit";
-        job = 420;
-      }
-      if (selection == 2) {
-        jobName = "Fighter";
-        job = 110;
-      }
-      if (selection == 3) {
-        jobName = "Page";
-        job = 120;
-      }
-      if (selection == 4) {
-        jobName = "Spearman";
-        job = 130;
-      }
-      if (selection == 5) {
-        jobName = "Ice Lightning Wizard";
-        job = 220;
-      }
-      if (selection == 6) {
-        jobName = "Fire Poison Wizard";
-        job = 210;
-      }
-      if (selection == 7) {
-        jobName = "Cleric";
-        job = 230;
-      }
-      if (selection == 8) {
-        jobName = "Hunter";
-        job = 310;
-      }
-      if (selection == 9) {
-        jobName = "Crossbowman";
-        job = 320;
-      }
-      if (selection == 10) {
-        jobName = "Brawler";
-        job = 510;
-      }
-      if (selection == 11) {
-        jobName = "Gunslinger";
-        job = 520;
-      }
-      if (selection == 12) {
-        jobName = "Level 2 Blaze Wizard";
-        job = 1210;
-      }
-      if (selection == 13) {
-        cm.sendOk("Come back to me when you are ready.");
-        cm.dispose();
-      }
-      if (selection == 14) {
-        jobName = "Level 2 Dawn Warrior";
-        job = 1110;
-      }
-      if (selection == 15) {
-        cm.sendOk("Come back to me when you are ready.");
-        cm.dispose();
-      }
-      if (selection == 16) {
-        jobName = "Level 2 Night Walker";
-        job = 1410;
-      }
-      if (selection == 17) {
-        cm.sendOk("#eCome back to me when you are ready.");
-        cm.dispose();
-      }
-      if (selection == 18) {
-        jobName = "Level 2 Wind Archer";
-        job = 1310;
-      }
-      if (selection == 19) {
-        cm.sendOk("#eCome back to me when you are ready.");
-        cm.dispose();
-      }
-      if (selection == 20) {
-        jobName = "Level 2 Thunder Breaker";
-        job = 1510;
-      }
-      if (selection == 21) {
-        jobName = "Level 2 Aran";
-        job = 2110;
-      }
-      if (selection == 22) {
-        cm.sendOk("#eCome back to me when you are ready.");
-        cm.dispose();
-      }
-      cm.sendYesNo("#eDo you want to become a #r" + jobName + "#k?");
-    } else if (status == 3) {
-      cm.changeJobById(job);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 61) {
-      if (cm.getJobId() == 410) {
-        status = 63;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 420) {
-        status = 66;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 310) {
-        status = 69;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 320) {
-        status = 72;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 210) {
-        status = 75;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 220) {
-        status = 78;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 230) {
-        status = 81;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 110) {
-        status = 84;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 120) {
-        status = 87;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 130) {
-        status = 90;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 520) {
-        status = 98;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 510) {
-        status = 93;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1210) {
-        status = 170;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1110) {
-        status = 173;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1410) {
-        status = 176;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1310) {
-        status = 179;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 1510) {
-        status = 182;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 2110) {
-        status = 185;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else {
-        cm.dispose();
-      }
-    } else if (status == 64) {
-      cm.changeJobById(411);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 67) {
-      cm.changeJobById(421);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 70) {
-      cm.changeJobById(311);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 73) {
-      cm.changeJobById(321);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 76) {
-      cm.changeJobById(211);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 79) {
-      cm.changeJobById(221);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 82) {
-      cm.changeJobById(231);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 85) {
-      cm.changeJobById(111);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 88) {
-      cm.changeJobById(121);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 91) {
-      cm.changeJobById(131);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 93) {
-      cm.changeJobById(511);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 96) {
-      cm.changeJobById(521);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 170) {
-      cm.changeJobById(1211);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 173) {
-      cm.changeJobById(1111);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 176) {
-      cm.changeJobById(1411);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 179) {
-      cm.changeJobById(1311);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 182) {
-      cm.changeJobById(1511);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 185) {
-      cm.changeJobById(2111);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe :)");
-      cm.dispose();
-    } else if (status == 99) {
-      cm.sendOk("#eGood luck on your training.");
-      cm.dispose();
-    } else if (status == 102) {
-      if (cm.getJobId() == 411) {
-        status = 105;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 421) {
-        status = 108;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 311) {
-        status = 111;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 321) {
-        status = 114;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 211) {
-        status = 117;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 221) {
-        status = 120;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 231) {
-        status = 123;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 111) {
-        status = 126;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 121) {
-        status = 129;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 131) {
-        status = 132;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 511) {
-        status = 134;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else if (cm.getJobId() == 521) {
-        status = 136;
-        cm.sendYesNo(
-          "#eCongratulations on reaching such a high level. Do you want to Job Advance now?"
-        );
-      } else {
-        cm.dispose();
-      }
-    } else if (status == 106) {
-      cm.changeJobById(412);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 109) {
-      cm.changeJobById(422);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 112) {
-      cm.changeJobById(312);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 115) {
-      cm.changeJobById(322);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 118) {
-      cm.changeJobById(212);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 121) {
-      cm.changeJobById(222);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 124) {
-      cm.changeJobById(232);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 127) {
-      cm.changeJobById(112);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 130) {
-      cm.changeJobById(122);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 133) {
-      cm.changeJobById(132);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 134) {
-      cm.changeJobById(512);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 135) {
-      cm.changeJobById(522);
-      cm.sendOk("#eThere you go. Hope you enjoy it.");
-      cm.dispose();
-    } else if (status == 154) {
-      cm.sendSimple(
-        "#eWhich would you like to be? #b\r\n#L0#Warrior#l\r\n#L1#Magician#l\r\n#L2#Bowman#l\r\n#L3#Thief#l\r\n#L4#Pirate#l#k\r\n\r\n#eOr Do you prefer Knights Of Cygnus?#k\r\n#L5##bDawn Warrior#l\r\n#L6#Night Walker#l\r\n#L7#Blaze Wizard#l\r\n#L8#Wind Archer#l\r\n#L9#Thunder Breaker#l#k\r\n\r\n#eOr do you prefer Aran?#k\r\n#L10#Aran#l"
-      );
-    } else if (status == 155) {
-      if (selection == 0) {
-        jobName = "Warrior";
-        job = 100;
-      }
-      if (selection == 1) {
-        jobName = "Magician";
-        job = 200;
-      }
-      if (selection == 2) {
-        jobName = "Bowman";
-        job = 300;
-      }
-      if (selection == 3) {
-        jobName = "Thief";
-        job = 400;
-      }
-      if (selection == 4) {
-        jobName = "Pirate";
-        job = 500;
-      }
-      if (selection == 5) {
-        jobName = "Dawn Warrior";
-        job = 1100;
-      }
-      if (selection == 6) {
-        jobName = "Night Walker";
-        job = 1400;
-      }
-      if (selection == 7) {
-        jobName = "Blaze Wizard";
-        job = 1200;
-      }
-      if (selection == 8) {
-        jobName = "Wind Archer";
-        job = 1300;
-      }
-      if (selection == 9) {
-        jobName = "Thunder Breaker";
-        job = 1500;
-      }
-      if (selection == 10) {
-        jobName = "Aran";
-        job = 2100;
-      }
-      cm.sendYesNo("#eDo you want to become a #r" + jobName + "#k?");
-    } else if (status == 156) {
-      cm.changeJobById(job);
-      cm.sendOk("#eThere you go. Hope you enjoy it. See you around in the future maybe.");
-      cm.dispose();
-    }
-  }
+	if(selection == -1) cm.dispose();
+
+	cm.getPlayer().message("selection: " + selection + ", type: " + type);
+	var jobId = cm.getPlayer().getJob().getId();
+	var availableJobIds = jobs[jobId];
+
+	if(!availableJobIds) availableJobIds = [];
+	else availableJobIds = availableJobIds.advancement;
+
+	if(availableJobIds.length == 0) {
+		cm.sendOk("No more job advancement for you until level 200 to reborn!");
+		cm.dispose();
+		return;
+	} 
+
+	if(state == "MENU") {
+		var options = [];
+
+		for(var i=0; i<availableJobIds.length; i++) {
+			var jid = availableJobIds[i]
+			options.push("#L" + i + "#" + jobs[jid].name + "#l");	
+		}
+
+		cm.sendSimple("You are a #r" + jobs[jobId].name + ".\r\n#bSelect a your next job advancement\r\n" + options.join("\r\n"));
+		state = "WAIT_JOB_SELECTION";
+	} else if(state == "WAIT_JOB_SELECTION") {
+		if(selection == -1) { cm.dispose(); return; }
+
+		var nextJobId = availableJobIds[selection];
+		var requiredLevel = jobs[nextJobId].level;
+		var currentLevel = cm.getPlayer().getLevel();
+
+		if(currentLevel < requiredLevel) { 
+			cm.sendOk("You need to be at least level #r" + requiredLevel + "#k to be able to change job");
+			cm.dispose();
+			return;
+		}
+
+		cm.changeJobById(nextJobId);
+		cm.sendOk("Congratulations! You're now a #r" + jobs[nextJobId].name + ".");
+		state = "DONE";
+	} else if(state == "DONE") {
+		cm.dispose();
+	}
+
+	// cm.dipose();
 }
+
+var jobs = {
+  0: { advancement: [100, 200, 300, 400, 500, 1000, 2000], level: 1, name: 'BEGINNER' },
+  100: { advancement: [110, 120, 130], level: 10, name: 'WARRIOR' },
+  110: { advancement: [111], level: 30, name: 'FIGHTER' },
+  111: { advancement: [112], level: 50, name: 'CRUSADER' },
+  112: { advancement: [], level: 70, name: 'HERO' },
+  120: { advancement: [121], level: 10, name: 'PAGE' },
+  121: { advancement: [122], level: 30, name: 'WHITEKNIGHT' },
+  122: { advancement: [], level: 70, name: 'PALADIN' },
+  130: { advancement: [131], level: 10, name: 'SPEARMAN' },
+  131: { advancement: [132], level: 30, name: 'DRAGONKNIGHT' },
+  132: { advancement: [], level: 70, name: 'DARKKNIGHT' },
+  200: { advancement: [210, 220, 230], level: 10, name: 'MAGICIAN' },
+  210: { advancement: [211], level: 30, name: 'FP_WIZARD' },
+  211: { advancement: [212], level: 50, name: 'FP_MAGE' },
+  212: { advancement: [], level: 70, name: 'FP_ARCHMAGE' },
+  220: { advancement: [221], level: 30, name: 'IL_WIZARD' },
+  221: { advancement: [222], level: 50, name: 'IL_MAGE' },
+  222: { advancement: [], level: 70, name: 'IL_ARCHMAGE' },
+  230: { advancement: [231], level: 10, name: 'CLERIC' },
+  231: { advancement: [232], level: 30, name: 'PRIEST' },
+  232: { advancement: [], level: 70, name: 'BISHOP' },
+  300: { advancement: [310, 320], level: 10, name: 'BOWMAN' },
+  310: { advancement: [311], level: 30, name: 'HUNTER' },
+  311: { advancement: [312], level: 50, name: 'RANGER' },
+  312: { advancement: [], level: 70, name: 'BOWMASTER' },
+  320: { advancement: [321], level: 30, name: 'CROSSBOWMAN' },
+  321: { advancement: [322], level: 50, name: 'SNIPER' },
+  322: { advancement: [], level: 70, name: 'MARKSMAN' },
+  400: { advancement: [410, 420], level: 10, name: 'THIEF' },
+  410: { advancement: [411], level: 30, name: 'ASSASSIN' },
+  411: { advancement: [412], level: 50, name: 'HERMIT' },
+  412: { advancement: [], level: 70, name: 'NIGHTLORD' },
+  420: { advancement: [421], level: 30, name: 'BANDIT' },
+  421: { advancement: [422], level: 50, name: 'CHIEFBANDIT' },
+  422: { advancement: [], level: 70, name: 'SHADOWER' },
+  500: { advancement: [510, 520], level: 10, name: 'PIRATE' },
+  510: { advancement: [511], level: 30, name: 'BRAWLER' },
+  511: { advancement: [512], level: 50, name: 'MARAUDER' },
+  512: { advancement: [], level: 70, name: 'BUCCANEER' },
+  520: { advancement: [521], level: 30, name: 'GUNSLINGER' },
+  521: { advancement: [522], level: 50, name: 'OUTLAW' },
+  522: { advancement: [], level: 70, name: 'CORSAIR' },
+  800: { advancement: [], level: 30, name: 'MAPLELEAF_BRIGADIER' },
+  900: { advancement: [], level: 1, name: 'GM' },
+  910: { advancement: [], level: 1, name: 'SUPERGM' },
+  1000: { advancement: [1100, 1200, 1300, 1400, 1500], level: 10, name: 'NOBLESSE' },
+  1100: { advancement: [1110], level: 10, name: 'DAWNWARRIOR1' },
+  1110: { advancement: [1111], level: 30, name: 'DAWNWARRIOR2' },
+  1111: { advancement: [1112], level: 50, name: 'DAWNWARRIOR3' },
+  1112: { advancement: [], level: 70, name: 'DAWNWARRIOR4' },
+  1200: { advancement: [1210], level: 10, name: 'BLAZEWIZARD1' },
+  1210: { advancement: [1211], level: 30, name: 'BLAZEWIZARD2' },
+  1211: { advancement: [1212], level: 50, name: 'BLAZEWIZARD3' },
+  1212: { advancement: [], level: 70, name: 'BLAZEWIZARD4' },
+  1300: { advancement: [1310], level: 10, name: 'WINDARCHER1' },
+  1310: { advancement: [1311], level: 30, name: 'WINDARCHER2' },
+  1311: { advancement: [1312], level: 50, name: 'WINDARCHER3' },
+  1312: { advancement: [], level: 70, name: 'WINDARCHER4' },
+  1400: { advancement: [1410], level: 10, name: 'NIGHTWALKER1' },
+  1410: { advancement: [1411], level: 30, name: 'NIGHTWALKER2' },
+  1411: { advancement: [1412], level: 50, name: 'NIGHTWALKER3' },
+  1412: { advancement: [], level: 70, name: 'NIGHTWALKER4' },
+  1500: { advancement: [1510], level: 10, name: 'THUNDERBREAKER1' },
+  1510: { advancement: [1511], level: 30, name: 'THUNDERBREAKER2' },
+  1511: { advancement: [1512], level: 50, name: 'THUNDERBREAKER3' },
+  1512: { advancement: [], level: 70, name: 'THUNDERBREAKER4' },
+  2000: { advancement: [2100, 2200], level: 10, name: 'LEGEND' },
+  2001: { advancement: [2100, 2200], level: 10, name: 'EVAN' },
+  2100: { advancement: [2110], level: 10, name: 'ARAN1' },
+  2110: { advancement: [2111], level: 30, name: 'ARAN2' },
+  2111: { advancement: [2112], level: 50, name: 'ARAN3' },
+  2112: { advancement: [], level: 70, name: 'ARAN4' },
+  2200: { advancement: [2210], level: 10, name: 'EVAN1' },
+  2210: { advancement: [2211], level: 30, name: 'EVAN2' },
+  2211: { advancement: [2212], level: 50, name: 'EVAN3' },
+  2212: { advancement: [2213], level: 70, name: 'EVAN4' },
+  2213: { advancement: [2214], level: 80, name: 'EVAN5' },
+  2214: { advancement: [2215], level: 90, name: 'EVAN6' },
+  2215: { advancement: [2216], level: 100, name: 'EVAN7' },
+  2216: { advancement: [2217], level: 110, name: 'EVAN8' },
+  2217: { advancement: [2218], level: 120, name: 'EVAN9' },
+  2218: { advancement: [], level: 130, name: 'EVAN10' }
+};

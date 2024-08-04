@@ -6,6 +6,7 @@ var commands = [
   {
     msg: "Open moi special shop huehuehue",
     fx: function () {
+      cm.dispose();
       cm.openShopNPC(1337);
       state = "DISPOSE";
     },
@@ -37,18 +38,15 @@ var commands = [
       cm.dispose();
       cm.openNpc(9000041);
     }
-  },
+  }, 
+  {
+    msg: "Learn special skills",
+    fx: function() {
+      cm.dispose();
+      cm.openNpc(10000, "learnSkill");
+    }
+  }
 ];
-
-function getInventoryOption() {
-      var options = ["EQUIP", "USE", "SET-UP", "ETC"];
-      var msg = [];
-      for(var i=0; i<options.length; i++) {
-        msg.push("#L" + i + "#" + options[i] + "#l"); 
-      }
-
-      return msg.join("\r\n");
-}
 
 function itemName(id) {
   return "#z" + id + "#";
@@ -74,7 +72,7 @@ function start(c, npc, character) {
 }
 
 function action(mode, type, selection) {
-  cm.getCurrentPlayer().message("selection: " + selection +  ", state: " + state);
+  //cm.getCurrentPlayer().message("selection: " + selection +  ", state: " + state);
   switch(state) {
     case "": 
 	if (selection >= 0 && selection < commands.length) {
