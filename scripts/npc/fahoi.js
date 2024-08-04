@@ -19,13 +19,6 @@ var commands = [
     },
   },
   {
-    msg: "Be stonk like fahoi and get all skills",
-    fx: function () {
-      cm.maxMastery();
-      state = "DISPOSE";
-    },
-  },
-  {
     msg: "Change job for chu?",
     fx: function () {
       cm.dispose();
