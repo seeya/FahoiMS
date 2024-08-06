@@ -12,6 +12,13 @@ var commands = [
     },
   },
   {
+    msg: "Warp nearer to someone now!",
+    fx: function () {
+      cm.dispose();
+      cm.openNpc(10000, "warpToOnlinePlayer");
+    },
+  },
+  {
     msg: "Fahoi gib chu some " + itemName(POWER_ELIXIR) + " x100",
     fx: function () {
       cm.giveItem(2000005, 100);
@@ -37,13 +44,6 @@ var commands = [
     fx: function () {
       cm.dispose();
       cm.openNpc(10000, "learnSkill");
-    },
-  },
-  {
-    msg: "Warp nearer to someone now (testing this)!",
-    fx: function () {
-      cm.dispose();
-      cm.openNpc(10000, "warpTo");
     },
   },
   {
@@ -85,7 +85,6 @@ function action(mode, type, selection) {
       if (selection >= 0 && selection < commands.length) {
         commands[selection].fx();
       }
-      cm.getCurrentPlayer().message("empty state");
       break;
     case "DISPOSE":
       cm.getCurrentPlayer().message("disposed");
