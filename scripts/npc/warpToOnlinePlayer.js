@@ -28,7 +28,9 @@ function action(mode, type, selection) {
       options.push("#L" + i + "#" + players[i].getName() + " - " + mapName + "#l");
     }
 
-    cm.getPlayer().message(playerList.length);
+    if (options.length == 0) {
+      options = ["#L0#So lonely~ nobody online#l"];
+    }
 
     cm.sendSimple("Select a player to warp to his/her map!\r\n" + options.join("\r\n"));
     state = "WARP_TO";
