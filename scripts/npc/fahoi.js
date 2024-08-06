@@ -26,10 +26,24 @@ var commands = [
     },
   },
   {
+    msg: "Wow you hit 200? REBIRTH TIME!",
+    fx: function () {
+      cm.dispose();
+      cm.openNpc(9010021);
+    },
+  },
+  {
     msg: "Learn special skills",
     fx: function () {
       cm.dispose();
       cm.openNpc(10000, "learnSkill");
+    },
+  },
+  {
+    msg: "Warp nearer to someone now (testing this)!",
+    fx: function () {
+      cm.dispose();
+      cm.openNpc(10000, "warpTo");
     },
   },
   {

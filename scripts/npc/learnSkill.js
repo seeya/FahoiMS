@@ -22,12 +22,9 @@ function action(mode, type, selection) {
     var skillId = skills[selection].id;
     cm.getPlayer().message("Learnt: " + skills[selection].name);
     cm.teachSkill(skillId, 1, 1, -1);
-
-    state = "DISPOSE";
-  } else if (state == "DISPOSE") {
     cm.dispose();
     return;
-  }
+  } 
 }
 
 var skills = [
